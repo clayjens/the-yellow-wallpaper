@@ -18,7 +18,7 @@ export default function Characters() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
             <BG>
-                <div className="flex items-center justify-between container mx-auto">
+                <div className="flex sm:flex-col md:flex-row items-center justify-between container mx-auto">
                     <div className="flex flex-col items-center">
                         <Image
                             src="/shadows/male.png"
