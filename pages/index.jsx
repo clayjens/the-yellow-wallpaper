@@ -1,8 +1,30 @@
 import Head from "next/head";
 import React from "react";
-import Hero from "../components/hero";
+import {
+    Button,
+    Box,
+    Stack,
+    VStack,
+    HStack,
+    Grid,
+    GridItem,
+    Container,
+    Image,
+    Tooltip,
+    Spacer,
+    Center,
+    Flex,
+} from "@chakra-ui/react";
+import { useTearContext } from "../context/tear";
+import HeroCard from "../components/HeroCard";
+import BackgroundStack from "../components/BackgroundStack";
+import { useRouter } from "next/router";
+import DoorButton from "../components/DoorButton";
+import TearWallpaperButton from "../components/TearWallpaperButton";
 
 export default function Home() {
+    const { torn, setTorn } = useTearContext();
+
     return (
         <div>
             <Head>
@@ -13,27 +35,14 @@ export default function Home() {
                 />
                 <link rel="icon" href="/favicon.ico" />
             </Head>
-            <Hero />
+            <BackgroundStack>
+                <Container>
+                    <HeroCard />
+                </Container>
+                <VStack>
+                    <DoorButton />
+                </VStack>
+            </BackgroundStack>
         </div>
     );
-
-    //         <footer className={styles.footer}>
-    //             <a
-    //                 href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-    //                 target="_blank"
-    //                 rel="noopener noreferrer"
-    //             >
-    //                 Powered by{" "}
-    //                 <span className={styles.logo}>
-    //                     <Image
-    //                         src="/vercel.svg"
-    //                         alt="Vercel Logo"
-    //                         width={72}
-    //                         height={16}
-    //                     />
-    //                 </span>
-    //             </a>
-    //         </footer>
-    //     </div>
-    // );
 }

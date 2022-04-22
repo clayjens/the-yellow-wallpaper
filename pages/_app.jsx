@@ -1,10 +1,12 @@
-import "../styles/globals.css";
 import { TearWrapper } from "../context/tear";
+import { ChakraProvider } from "@chakra-ui/react";
 
 function TheYellowWallpaperApp({ Component, pageProps }) {
     return (
         <TearWrapper>
-            <Component {...pageProps} />
+            <ChakraProvider {...pageProps}>
+                <Component {...pageProps} />
+            </ChakraProvider>
         </TearWrapper>
     );
 }
