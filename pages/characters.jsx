@@ -20,7 +20,7 @@ import assets from "../assets";
 import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
 function Characters() {
-    const CharacterCardData = [
+    const CharacterData = [
         {
             image: assets.shadows.female,
             alt: "",
@@ -40,12 +40,11 @@ function Characters() {
     ];
 
     const [cardIndex, setCardIndex] = React.useState(0);
-    const [cardData, setCardData] = React.useState(
-        CharacterCardData[cardIndex]
-    );
+    const [cardData, setCardData] = React.useState(CharacterData[cardIndex]);
 
+    // FIXME: What is even going on with this warning?
     React.useEffect(() => {
-        setCardData(CharacterCardData[cardIndex]);
+        setCardData(CharacterData[cardIndex]);
     }, [cardIndex, setCardIndex]);
 
     const CharacterCard = ({ image, alt, name, roles, description }) => (
@@ -69,53 +68,30 @@ function Characters() {
         </GridItem>
     );
 
-    const NextButton = () => {
-        const handleButton = () => {
-            if (cardIndex != CharacterCardData.length - 1) {
-                setCardIndex(cardIndex + 1);
-            }
-        };
-
-        return (
-            <Box p="2" bg="blackAlpha.700" rounded="lg">
-                <Tooltip label="Next Character">
-                    <IconButton
-                        variant="solid"
-                        colorScheme="yellow"
-                        icon={<FiArrowRight size={20} />}
-                        onClick={handleButton}
-                    />
-                </Tooltip>
-            </Box>
-        );
-    };
-
-    const PrevButton = () => {
-        const handleButton = () => {
-            if (cardIndex != 0) {
-                setCardIndex(cardIndex - 1);
-            }
-        };
-
-        return (
-            <Box p="2" bg="blackAlpha.700" rounded="lg">
-                <Tooltip label="Previous Character">
-                    <IconButton
-                        variant="solid"
-                        colorScheme="yellow"
-                        icon={<FiArrowLeft size={20} />}
-                        onClick={handleButton}
-                    />
-                </Tooltip>
-            </Box>
-        );
-    };
+    const ArrowButton = ({ onClick, label, icon }) => (
+        <Box p="2" bg="blackAlpha.700" rounded="lg">
+            <Tooltip label={label}>
+                <IconButton
+                    onClick={onClick}
+                    variant="solid"
+                    colorScheme="yellow"
+                    icon={icon}
+                />
+            </Tooltip>
+        </Box>
+    );
 
     return (
         <Document>
             <Container maxW="container.xl" pt="8">
                 <HStack>
-                    <PrevButton />
+                    <ArrowButton
+                        label="Previous Character"
+                        icon={<FiArrowLeft size="30" />}
+                        onClick={() => {
+                            if (cardIndex != 0) setCardIndex(cardIndex - 1);
+                        }}
+                    />
                     <CharacterCard
                         image={cardData.image}
                         alt={cardData.alt}
@@ -123,7 +99,14 @@ function Characters() {
                         roles={cardData.roles}
                         description={cardData.description}
                     />
-                    <NextButton />
+                    <ArrowButton
+                        label="Next Character"
+                        icon={<FiArrowRight size="30" />}
+                        onClick={() => {
+                            if (cardIndex != CharacterData.length - 1)
+                                setCardIndex(cardIndex + 1);
+                        }}
+                    />
                 </HStack>
             </Container>
         </Document>

@@ -8,8 +8,9 @@ import {
     Text,
     Flex,
 } from "@chakra-ui/react";
-import { FiLink } from "react-icons/fi";
+import { FiExternalLink } from "react-icons/fi";
 import React from "react";
+import { NavGroup } from "./Navbar";
 
 export default function Hero() {
     const Emphasis = ({ children }) => (
@@ -33,8 +34,11 @@ export default function Hero() {
                     <Heading>The Yellow Wallpaper</Heading>
                 </Box>
                 <Divider />
-                <Box mt="4" fontWeight="medium" fontSize="lg">
-                    &quot;This wise man put me to bed and applied the{" "}
+                <Box mt="4" fontWeight="medium" fontSize="lg" lineHeight="1.5">
+                    <Text as="em" fontSize="2xl" fontWeight="bold" pr="1">
+                        &quot;
+                    </Text>
+                    This wise man put me to bed and applied the{" "}
                     <Emphasis>rest cure</Emphasis>, to which a still-good
                     physique responded so promptly that he concluded there was{" "}
                     <Emphasis>nothing much the matter with me</Emphasis>, and
@@ -50,20 +54,27 @@ export default function Hero() {
                     <Emphasis>
                         never to touch pen, brush, or pencil again
                     </Emphasis>
-                    &quot; as long as I lived.&quot;
+                    &quot; as long as I lived.
+                    <Text as="em" fontSize="2xl" fontWeight="bold">
+                        &quot;
+                    </Text>
                 </Box>
                 <Box mt="4">
                     <Link
                         href="https://www.americanyawp.com/reader/18-industrial-america/charlotte-perkins-gilman-why-i-wrote-the-yellow-wallpaper-1913/"
                         isExternal
                     >
-                        <Flex>
+                        <Flex fontSize="xl" fontWeight="light">
                             — Charlotte Perkins Gilman, 1913
                             <Box mt="1" pl="1">
-                                <FiLink />
+                                <FiExternalLink />
                             </Box>
                         </Flex>
                     </Link>
+                </Box>
+                <Divider pt="6" />
+                <Box pt="8">
+                    <NavGroup btnSize="lg" />
                 </Box>
             </Center>
         </Container>

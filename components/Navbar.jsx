@@ -1,17 +1,16 @@
 import { Box, Button, IconButton, Tooltip } from "@chakra-ui/react";
-import { FiHome, FiUsers } from "react-icons/fi";
+import { FiAlertCircle, FiBook, FiHome, FiUsers } from "react-icons/fi";
 import { useTearContext } from "../context/tear";
 import React from "react";
 import Link from "next/link";
 
-export default function Navbar() {
-    const { torn, setTorn } = useTearContext();
-
-    const handleTearWallpaperButton = () => {
-        if (!torn) setTorn(true);
-    };
-
-    const NavButton = ({ href, tooltip, icon }) => (
+function NavButton({
+    href = "#",
+    tooltip = "Placeholder",
+    icon = <FiAlertCircle size="20" />,
+    size = "md",
+}) {
+    return (
         <Link href={href} passHref>
             <a>
                 <Tooltip label={tooltip}>
@@ -20,11 +19,47 @@ export default function Navbar() {
                         variant="solid"
                         colorScheme="yellow"
                         mr="6"
+                        size={size}
                     />
                 </Tooltip>
             </a>
         </Link>
     );
+}
+
+export function NavGroup({ btnSize = "md" }) {
+    const iconSize = btnSize === "lg" ? 28 : 20;
+
+    return (
+        <Box>
+            <NavButton
+                href="/"
+                tooltip="Home"
+                icon={<FiHome size={iconSize} color="black" />}
+                size={btnSize}
+            />
+            <NavButton
+                href="/characters"
+                tooltip="Characters"
+                icon={<FiUsers size={iconSize} color="black" />}
+                size={btnSize}
+            />
+            <NavButton
+                href="/summary"
+                tooltip="Summary"
+                icon={<FiBook size={iconSize} color="black" />}
+                size={btnSize}
+            />
+        </Box>
+    );
+}
+
+export default function Navbar() {
+    const { torn, setTorn } = useTearContext();
+
+    const handleTearWallpaperButton = () => {
+        if (!torn) setTorn(true);
+    };
 
     return (
         <Box bg="blackAlpha.700" py="2">
@@ -36,18 +71,7 @@ export default function Navbar() {
                     ml="6"
                     mr="6"
                 >
-                    <Box>
-                        <NavButton
-                            href="/"
-                            tooltip="Home"
-                            icon={<FiHome size={20} color="black" />}
-                        />
-                        <NavButton
-                            href="/characters"
-                            tooltip="Characters"
-                            icon={<FiUsers size={20} color="black" />}
-                        />
-                    </Box>
+                    <NavGroup />
                     <Box>
                         {!torn && (
                             <Button
