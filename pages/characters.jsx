@@ -1,93 +1,133 @@
 import React from "react";
-import BackgroundStack from "../components/BackgroundStack";
 import {
-    Spacer,
-    Container,
-    VStack,
-    HStack,
-    Text,
-    Image,
-    Box,
-    Heading,
     Center,
+    Text,
+    Box,
+    Container,
+    Grid,
+    Image,
+    VStack,
+    Divider,
     Badge,
-    Flex,
-    Button,
-    Stack,
+    GridItem,
+    HStack,
+    SimpleGrid,
+    IconButton,
+    Tooltip,
 } from "@chakra-ui/react";
+import Document from "../components/Document";
+import assets from "../assets";
+import { FiArrowLeft, FiArrowRight } from "react-icons/fi";
 
-export default function Characters() {
-    const CharacterCard = ({ img, alt, title, description, role }) => {
+function Characters() {
+    const CharacterCardData = [
+        {
+            image: assets.shadows.female,
+            alt: "",
+            name: "Narrator",
+            description:
+                "The unnamed narrator can be seen as an extension of Gilman, especially when considering the events of The Yellow Wallpaper to Gilman's own. Loved by her husband, John, the Narrator is unable to express that she is unwell due to John's treatment of her. Solitary and sedentary, the Narrator's mental issues become more prevalent until the climax of The Yellow Wallpaper in which her mental state has fully deteriorated. Disallowed to see her child, the Narrator has no sense of motherhood.",
+            roles: ["The Wife"],
+        },
+        {
+            image: assets.shadows.male,
+            alt: "",
+            name: "John",
+            description:
+                "A physician, much like the Narrator's brother, who believes that his specially-conceived treatment of his wife is helping her. Perhaps ignorant to the true effects of the treatment, John believes that what he's doing is best and must be done in order to help his wife recover. John's sister, Jennie, is the caregiver of the household and also believes in John's treatment. However, Jennie removes the feminine nature of the Narrator.",
+            roles: ["The Husband", "Physician"],
+        },
+    ];
+
+    const [cardIndex, setCardIndex] = React.useState(0);
+    const [cardData, setCardData] = React.useState(
+        CharacterCardData[cardIndex]
+    );
+
+    React.useEffect(() => {
+        setCardData(CharacterCardData[cardIndex]);
+    }, [cardIndex, setCardIndex]);
+
+    const CharacterCard = ({ image, alt, name, roles, description }) => (
+        <GridItem bg="blackAlpha.700" rounded="lg" py="10" px="5">
+            <VStack color="white">
+                <HStack>
+                    {roles &&
+                        roles.map((role, i) => (
+                            <Badge key={i} variant="solid" colorScheme="yellow">
+                                {role}
+                            </Badge>
+                        ))}
+                </HStack>
+                <Image src={image} alt={alt} boxSize="256" />
+                <Text fontSize="3xl" fontWeight="bold">
+                    {name}
+                </Text>
+                <Divider />
+                <Text fontSize="lg">{description}</Text>
+            </VStack>
+        </GridItem>
+    );
+
+    const NextButton = () => {
+        const handleButton = () => {
+            if (cardIndex != CharacterCardData.length - 1) {
+                setCardIndex(cardIndex + 1);
+            }
+        };
+
         return (
-            <Box
-                w="600px"
-                rounded="md"
-                overflow="hidden"
-                bg="blackAlpha.600"
-                p="5"
-            >
-                <Center mt="8">
-                    <Badge
+            <Box p="2" bg="blackAlpha.700" rounded="lg">
+                <Tooltip label="Next Character">
+                    <IconButton
                         variant="solid"
-                        colorScheme="black"
-                        rounded="full"
-                        fontSize="md"
-                    >
-                        {role}
-                    </Badge>
-                </Center>
-                <Center py="8">
-                    <Image src={img} alt={alt} boxSize="300"></Image>
-                </Center>
-                <Box px="5">
-                    <Stack>
-                        <Center>
-                            <Text
-                                fontSize="3xl"
-                                fontWeight="bold"
-                                my={1}
-                                color="white"
-                            >
-                                {title}
-                            </Text>
-                        </Center>
-                        <Text
-                            fontSize="2xl"
-                            fontWeight="normal"
-                            my={2}
-                            color="white"
-                        >
-                            {description}
-                        </Text>
-                    </Stack>
-                </Box>
+                        colorScheme="yellow"
+                        icon={<FiArrowRight size={20} />}
+                        onClick={handleButton}
+                    />
+                </Tooltip>
+            </Box>
+        );
+    };
+
+    const PrevButton = () => {
+        const handleButton = () => {
+            if (cardIndex != 0) {
+                setCardIndex(cardIndex - 1);
+            }
+        };
+
+        return (
+            <Box p="2" bg="blackAlpha.700" rounded="lg">
+                <Tooltip label="Previous Character">
+                    <IconButton
+                        variant="solid"
+                        colorScheme="yellow"
+                        icon={<FiArrowLeft size={20} />}
+                        onClick={handleButton}
+                    />
+                </Tooltip>
             </Box>
         );
     };
 
     return (
-        <BackgroundStack>
-            <Flex justifyContent={"center"}>
-                <Spacer />
-                <CharacterCard
-                    img="/shadows/female.png"
-                    title="Narrator"
-                    role="The Wife"
-                    description={
-                        "Misunderstood and poorly treated in the hopes of being treated properly, the unnamed Narrator is an individual who faces poor conditions placed on her by her husband, John."
-                    }
-                />
-                <Spacer />
-                <CharacterCard
-                    img="/shadows/male.png"
-                    title="John"
-                    role="The Husband"
-                    description={
-                        "As a physician and loving husband, John wishes the best for his wife. However, his own expectations are unfairly placed onto the Narrator. These expectations are physically represented by the deteriorating room and poor treatment of the Narrator."
-                    }
-                />
-                <Spacer />
-            </Flex>
-        </BackgroundStack>
+        <Document>
+            <Container maxW="container.xl" pt="8">
+                <HStack>
+                    <PrevButton />
+                    <CharacterCard
+                        image={cardData.image}
+                        alt={cardData.alt}
+                        name={cardData.name}
+                        roles={cardData.roles}
+                        description={cardData.description}
+                    />
+                    <NextButton />
+                </HStack>
+            </Container>
+        </Document>
     );
 }
+
+export default Characters;
