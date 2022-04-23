@@ -1,6 +1,8 @@
 import React from "react";
-import { Stack } from "@chakra-ui/react";
+import Navbar from "./Navbar";
+import { Stack, Box } from "@chakra-ui/react";
 import { useTearContext } from "../context/tear";
+import Footer from "./Footer";
 
 export default function BackgroundStack({ children }) {
     const { torn } = useTearContext();
@@ -10,11 +12,14 @@ export default function BackgroundStack({ children }) {
             backgroundImage={
                 torn ? "url('wallpaper_torn.jpg')" : "url('wallpaper.jpg')"
             }
-            backgroundPosition="center"
-            backgroundRepeat="no-repeat"
+            bgRepeat="no-repeat"
+            bgPos="center"
+            backgroundSize="cover"
             minHeight="100vh"
         >
-            {children}
+            <Navbar />
+            <Box>{children}</Box>
+            <Footer />
         </Stack>
     );
 }

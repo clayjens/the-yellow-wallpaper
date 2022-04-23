@@ -11,11 +11,12 @@ export default function HeroCard() {
             rounded="md"
         >
             <VStack>
-                <HStack>
-                    <Center>
-                        <Heading fontSize="3xl">The Yellow Wallpaper</Heading>
-                    </Center>
-                </HStack>
+                <VStack>
+                    <Heading fontSize="4xl">The Yellow Wallpaper</Heading>
+                    <Text fontSize="xl">
+                        A narrative on mental and physical health.{" "}
+                    </Text>
+                </VStack>
                 <Center>
                     <Text mt="4" fontSize="lg">
                         Charlotte Perkins Gilman, 1892
